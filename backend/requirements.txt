@@ -1,0 +1,13 @@
+# ======================================
+# Verbatim Backend — Python Dependencies
+# ======================================
+# yeh sab packages chahiye backend chalane ke liye
+# install karo via: pip install -r requirements.txt
+
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+groq>=0.4.0
+
+# Note: subprocess is part of Python's standard library
+# — alag se install karne ki zaroorat nahi hai bhai

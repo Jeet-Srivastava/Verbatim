@@ -1,0 +1,116 @@
+/*
+ * Verbatim — Global Styles
+ * =========================
+ * Tailwind base + custom design tokens yaha define ho rahe hain.
+ * Dark mode first approach — kyunki light mode toh baad mein bhi aa jayega.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -----------------------------------------------
+   CSS Variables — poora color system yaha hai
+   agar theme change karna ho toh bas yaha aao
+----------------------------------------------- */
+:root {
+  --background: #0a0a0f;
+  --foreground: #e5e5e5;
+  --accent: #8b5cf6;           /* violet — primary brand color */
+  --accent-hover: #a78bfa;
+  --surface: #18181b;          /* cards, panels ke liye */
+  --surface-hover: #27272a;
+  --border: #27272a;
+  --muted: #71717a;
+  --success: #22c55e;
+  --error: #ef4444;
+}
+
+/* -----------------------------------------------
+   Base styles — body, scrollbar, selection
+----------------------------------------------- */
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* Scrollbar customize karna — default bahut ugly lagta hai */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* Text select karne par accent color dikhega */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: #fff;
+}
+
+/* -----------------------------------------------
+   Utility classes — Tailwind extend ke upar
+   custom utilities jo baar baar chahiye
+----------------------------------------------- */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Glassmorphism effect — cards ke liye mast lagega */
+  .glass {
+    background: rgba(24, 24, 27, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* Glow effect — hover pe buttons ke liye */
+  .glow-violet {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3),
+                0 0 60px rgba(139, 92, 246, 0.1);
+  }
+}
+
+/* -----------------------------------------------
+   Animations — smooth feel ke liye
+   boring static pages kaun dekhna chahta hai
+----------------------------------------------- */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
