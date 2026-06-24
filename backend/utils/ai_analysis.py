@@ -2,7 +2,7 @@
 AI Analysis — Chapters & Summary via LLaMA
 =============================================
 After Whisper gives us the raw transcript, we send it to Groq's
-llama3-8b-8192 model to generate two things:
+llama-3.1-8b-instant model to generate two things:
 
   1. Chapters — logical sections of the content with timestamps
      and short 3-word titles (like YouTube chapters)
@@ -84,7 +84,7 @@ def analyze_transcript(
 
     try:
         response = client.chat.completions.create(
-            model="llama3-8b-8192",
+            model="llama-3.1-8b-instant",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},

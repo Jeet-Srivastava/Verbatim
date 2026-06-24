@@ -101,7 +101,7 @@ ffmpeg -i input.mp4 -vn -acodec libopus -b:a 32k -ar 16000 -ac 1 -application vo
 
 ## 🌟 The Meaningful Enhancement: AI Chapter Generation
 
-After Whisper produces the raw transcript, we send it to **Groq's LLaMA 3 (8B)** with a carefully crafted prompt that generates:
+After Whisper produces the raw transcript, we send it to **Groq's LLaMA 3.1 (8B)** with a carefully crafted prompt that generates:
 
 1. **Chapters** — 3-8 logical sections with precise timestamps and exactly 3-word titles
 2. **Executive Summary** — A 2-3 sentence overview of the content
@@ -120,7 +120,7 @@ Whisper Output (segments with timestamps)
                │
                ▼
 ┌──────────────────────────────┐
-│  LLaMA 3 (8B) via Groq      │
+│  LLaMA 3.1 (8B) via Groq      │
 │  • JSON mode enforced        │
 │  • Low temperature (0.3)     │
 │  • Strict output schema      │

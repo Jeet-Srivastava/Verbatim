@@ -47,3 +47,6 @@ temp/
 *.mkv
 *.avi
 *.mov
+# secrets
+backend/.env
+.env

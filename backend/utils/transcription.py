@@ -130,34 +130,50 @@ def transcribe_audio(
 
             transcription = client.audio.transcriptions.create(**kwargs)
 
-        # the response object has .text, .segments, .language, .duration
-        # pull everything out into a clean dict
-        raw_text = transcription.text or ""
+        # the response could be a Pydantic model or a dict depending on SDK version
+        # let's handle both gracefully
+        if isinstance(transcription, dict):
+            raw_text = transcription.get("text", "")
+            raw_segments = transcription.get("segments", [])
+            detected_language = transcription.get("language", language or "unknown")
+            duration = transcription.get("duration", 0.0)
+        else:
+            raw_text = transcription.text or ""
+            raw_segments = transcription.segments if hasattr(transcription, "segments") else []
+            detected_language = (
+                transcription.language
+                if hasattr(transcription, "language")
+                else language or "unknown"
+            )
+            duration = (
+                transcription.duration
+                if hasattr(transcription, "duration")
+                else 0.0
+            )
+
         segments = []
 
         # extract segment data — each segment has start, end, and text
-        if hasattr(transcription, "segments") and transcription.segments:
-            for seg in transcription.segments:
+        if raw_segments:
+            for seg in raw_segments:
+                # Handle both dict and object style segments
+                if isinstance(seg, dict):
+                    seg_id = seg.get("id", len(segments))
+                    seg_start = seg.get("start", 0.0)
+                    seg_end = seg.get("end", 0.0)
+                    seg_text = seg.get("text", "").strip()
+                else:
+                    seg_id = seg.id if hasattr(seg, "id") else len(segments)
+                    seg_start = seg.start
+                    seg_end = seg.end
+                    seg_text = seg.text.strip()
+
                 segments.append({
-                    "id": seg.id if hasattr(seg, "id") else len(segments),
-                    "start": seg.start,
-                    "end": seg.end,
-                    "text": seg.text.strip(),
+                    "id": seg_id,
+                    "start": seg_start,
+                    "end": seg_end,
+                    "text": seg_text,
                 })
-
-        # detect language from response
-        detected_language = (
-            transcription.language
-            if hasattr(transcription, "language")
-            else language or "unknown"
-        )
-
-        # get duration from response
-        duration = (
-            transcription.duration
-            if hasattr(transcription, "duration")
-            else 0.0
-        )
 
         # generate the SRT string from segments
         srt_content = segments_to_srt(segments)

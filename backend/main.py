@@ -98,6 +98,25 @@ ALLOWED_AUDIO_TYPES = {
 }
 ALLOWED_TYPES = ALLOWED_VIDEO_TYPES | ALLOWED_AUDIO_TYPES
 
+# fallback: some clients (curl, older browsers) send wrong MIME types
+# so we also check the file extension — belt and suspenders approach
+ALLOWED_EXTENSIONS = {
+    ".mp4", ".mkv", ".avi", ".mov", ".webm",
+    ".mp3", ".wav", ".ogg", ".m4a", ".opus",
+}
+
+
+def _is_allowed_file(content_type: str | None, filename: str | None) -> bool:
+    """Check if a file is allowed by MIME type OR extension."""
+    if content_type and content_type in ALLOWED_TYPES:
+        return True
+    # fallback to extension check — handles cases where MIME is wrong/missing
+    if filename:
+        ext = Path(filename).suffix.lower()
+        if ext in ALLOWED_EXTENSIONS:
+            return True
+    return False
+
 
 # ==============================================================
 # ROUTES
@@ -125,7 +144,7 @@ async def health_check():
 @app.post("/api/upload")
 async def upload_video(file: UploadFile = File(...)):
     """Accept a media file and return its info. No processing."""
-    if not file.content_type or file.content_type not in ALLOWED_TYPES:
+    if not _is_allowed_file(file.content_type, file.filename):
         raise HTTPException(
             status_code=400,
             detail=f"Unsupported file type: {file.content_type}. Send a video or audio file."
@@ -166,7 +185,7 @@ async def process_upload(
     """
 
     # --- validation ---
-    if not file.content_type or file.content_type not in ALLOWED_TYPES:
+    if not _is_allowed_file(file.content_type, file.filename):
         raise HTTPException(
             status_code=400,
             detail=f"Unsupported file type: {file.content_type}. "
