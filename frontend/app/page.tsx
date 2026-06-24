@@ -1,128 +1,112 @@
 /**
  * Verbatim — Landing Page
  * ========================
- * Yeh hai main page jo user ko sabse pehle dikhega.
- * Upload area, status indicator, aur basic branding hai yaha.
- * Abhi static hai — baad mein API integration aayega.
+ * This is the first thing people see. It needs to look insane.
+ * Hero section with the brand, a clear CTA that sends them to /upload,
+ * and a few feature cards to build trust.
  */
+
+import Link from "next/link";
+import Navbar from "@/components/layout/Navbar";
 
 export default function Home() {
   return (
-    // full screen centered layout — hero section jaisa feel
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 py-16">
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
 
-      {/* -----------------------------------------------
-          Header section — branding + tagline
-          pehli impression yahi se banti hai bhai
-      ----------------------------------------------- */}
-      <div className="text-center mb-12 animate-fade-in">
-        {/* Logo / Brand name — bold aur prominent */}
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400">
-            Verbatim
-          </span>
-        </h1>
+      {/* hero section — full viewport centered */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-16 md:py-24">
+        {/* brand + tagline */}
+        <div className="text-center mb-12 animate-fade-in">
+          {/* glowing accent dot above the title */}
+          <div className="flex justify-center mb-6">
+            <div className="w-2 h-2 rounded-full bg-cyan-400 glow-cyan" />
+          </div>
 
-        {/* Tagline — chhota, crisp, point pe */}
-        <p className="text-lg md:text-xl text-zinc-400 max-w-md mx-auto text-balance">
-          Upload your video. Get an accurate transcript.
-          <br />
-          <span className="text-zinc-500">Powered by Groq AI — blazing fast.</span>
-        </p>
-      </div>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-5">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-cyan-300">
+              Verbatim
+            </span>
+          </h1>
 
-      {/* -----------------------------------------------
-          Upload Card — yaha video drop/select hoga
-          glassmorphism effect laga hai — premium feel
-      ----------------------------------------------- */}
-      <div
-        className="glass rounded-2xl p-8 md:p-12 w-full max-w-xl text-center 
-                   animate-fade-in transition-all duration-300 
-                   hover:border-violet-500/30 hover:glow-violet cursor-pointer group"
-        style={{ animationDelay: "0.2s", opacity: 0 }}
-      >
-        {/* Upload icon — SVG inline rakha hai, external dependency nahi chahiye */}
-        <div className="mb-6">
-          <svg
-            className="w-16 h-16 mx-auto text-violet-400 group-hover:text-violet-300 transition-colors"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-            />
-          </svg>
+          <p className="text-lg md:text-xl text-zinc-400 max-w-lg mx-auto text-balance leading-relaxed">
+            Upload your video or audio. Get an accurate transcript
+            in seconds — powered by Groq AI.
+          </p>
+
+          {/* CTA buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+            <Link
+              href="/upload"
+              className="group relative px-7 py-3.5 rounded-xl font-semibold text-white
+                bg-gradient-to-r from-cyan-600 to-blue-600
+                hover:from-cyan-500 hover:to-blue-500
+                transition-all duration-300
+                hover:shadow-xl hover:shadow-cyan-500/20
+                active:scale-[0.97]"
+            >
+              <span className="flex items-center gap-2">
+                Get Started
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </span>
+            </Link>
+
+            <a
+              href="https://github.com/Jeet-Srivastava/Verbatim"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-7 py-3.5 rounded-xl font-medium text-zinc-400
+                border border-zinc-800 hover:border-zinc-700
+                hover:text-zinc-200 hover:bg-zinc-900/50
+                transition-all duration-200"
+            >
+              View Source
+            </a>
+          </div>
         </div>
 
-        {/* Upload instructions — clear aur simple */}
-        <h2 className="text-xl font-semibold text-zinc-200 mb-2">
-          Drop your video here
-        </h2>
-        <p className="text-sm text-zinc-500 mb-6">
-          MP4, MKV, AVI, MOV — 500MB tak upload kar sakte ho
-        </p>
-
-        {/* Upload button — ye abhi dummy hai, functionality baad mein */}
-        <button
-          className="px-6 py-3 bg-violet-600 hover:bg-violet-500 
-                     text-white font-medium rounded-xl 
-                     transition-all duration-200 
-                     hover:shadow-lg hover:shadow-violet-500/25
-                     active:scale-95"
+        {/* feature cards — three column grid */}
+        <div
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl animate-fade-in stagger"
+          style={{ animationDelay: "200ms" }}
         >
-          Select Video File
-        </button>
+          <FeatureCard
+            icon="⚡"
+            title="Lightning Fast"
+            description="Groq inference engine — transcripts ready in seconds, not minutes."
+          />
+          <FeatureCard
+            icon="🎯"
+            title="High Accuracy"
+            description="State-of-the-art Whisper models fine-tuned for production quality."
+          />
+          <FeatureCard
+            icon="🎙️"
+            title="Upload or Record"
+            description="Drag & drop files or record directly from your microphone."
+          />
+        </div>
+
+        {/* footer text */}
+        <p className="mt-16 text-xs text-zinc-700 animate-fade-in stagger" style={{ animationDelay: "400ms" }}>
+          Built with Next.js, FastAPI & Groq — by Jeet Srivastava
+        </p>
       </div>
+    </div>
+  );
+}
 
-      {/* -----------------------------------------------
-          Status / Feature cards — kya kya hoga batao
-          user ko confidence dena hai ki system solid hai
-      ----------------------------------------------- */}
-      <div
-        className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12 w-full max-w-3xl animate-fade-in"
-        style={{ animationDelay: "0.4s", opacity: 0 }}
-      >
-        {/* Feature 1 — Fast processing */}
-        <div className="glass rounded-xl p-5 text-center">
-          <div className="text-2xl mb-2">⚡</div>
-          <h3 className="text-sm font-semibold text-zinc-300">Lightning Fast</h3>
-          <p className="text-xs text-zinc-500 mt-1">
-            Groq inference — seconds mein transcript ready
-          </p>
-        </div>
-
-        {/* Feature 2 — Accurate output */}
-        <div className="glass rounded-xl p-5 text-center">
-          <div className="text-2xl mb-2">🎯</div>
-          <h3 className="text-sm font-semibold text-zinc-300">High Accuracy</h3>
-          <p className="text-xs text-zinc-500 mt-1">
-            State-of-the-art speech recognition models
-          </p>
-        </div>
-
-        {/* Feature 3 — Multiple formats support */}
-        <div className="glass rounded-xl p-5 text-center">
-          <div className="text-2xl mb-2">📁</div>
-          <h3 className="text-sm font-semibold text-zinc-300">Any Format</h3>
-          <p className="text-xs text-zinc-500 mt-1">
-            Video daalo kisi bhi format mein — hum handle kar lenge
-          </p>
-        </div>
-      </div>
-
-      {/* -----------------------------------------------
-          Footer line — subtle, non-intrusive
-      ----------------------------------------------- */}
-      <p
-        className="mt-16 text-xs text-zinc-600 animate-fade-in"
-        style={{ animationDelay: "0.6s", opacity: 0 }}
-      >
-        Built with Next.js, FastAPI & Groq — by Jeet Srivastava
-      </p>
+// small helper component — keeps the page file clean
+function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
+  return (
+    <div className="glass rounded-xl p-5 text-center hover:border-cyan-500/15
+      transition-all duration-300 group hover:ring-glow-cyan">
+      <div className="text-2xl mb-2.5 group-hover:scale-110 transition-transform">{icon}</div>
+      <h3 className="text-sm font-semibold text-zinc-300 mb-1">{title}</h3>
+      <p className="text-xs text-zinc-500 leading-relaxed">{description}</p>
     </div>
   );
 }

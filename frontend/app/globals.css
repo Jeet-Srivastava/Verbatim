@@ -1,8 +1,9 @@
 /*
- * Verbatim — Global Styles
- * =========================
- * Tailwind base + custom design tokens yaha define ho rahe hain.
- * Dark mode first approach — kyunki light mode toh baad mein bhi aa jayega.
+ * Verbatim — Global Styles (Phase 2)
+ * ====================================
+ * Switched from violet to electric cyan/blue for that futuristic look.
+ * Dark mode first — zinc-900/950 base with glassmorphism panels.
+ * If you want to tweak the vibe, mess with the CSS vars below.
  */
 
 @tailwind base;
@@ -10,24 +11,29 @@
 @tailwind utilities;
 
 /* -----------------------------------------------
-   CSS Variables — poora color system yaha hai
-   agar theme change karna ho toh bas yaha aao
+   Design Tokens — the entire color system lives here.
+   Change these and the whole app follows.
 ----------------------------------------------- */
 :root {
-  --background: #0a0a0f;
-  --foreground: #e5e5e5;
-  --accent: #8b5cf6;           /* violet — primary brand color */
-  --accent-hover: #a78bfa;
-  --surface: #18181b;          /* cards, panels ke liye */
-  --surface-hover: #27272a;
-  --border: #27272a;
-  --muted: #71717a;
-  --success: #22c55e;
-  --error: #ef4444;
+  --background: #09090b;          /* zinc-950 — deepest dark */
+  --foreground: #e4e4e7;          /* zinc-200 */
+  --accent: #06b6d4;              /* cyan-500 — primary electric blue */
+  --accent-light: #22d3ee;        /* cyan-400 — hover states */
+  --accent-dim: #0891b2;          /* cyan-600 — pressed states */
+  --accent-glow: rgba(6, 182, 212, 0.35);
+  --surface: #18181b;             /* zinc-900 — cards, panels */
+  --surface-elevated: #1c1c20;    /* slightly lighter than surface */
+  --surface-hover: #27272a;       /* zinc-800 */
+  --border: rgba(63, 63, 70, 0.5);  /* zinc-700 at 50% — subtle borders */
+  --border-active: rgba(6, 182, 212, 0.4);
+  --muted: #71717a;               /* zinc-500 */
+  --success: #34d399;             /* emerald-400 */
+  --error: #f87171;               /* red-400 */
+  --warning: #fbbf24;             /* amber-400 */
 }
 
 /* -----------------------------------------------
-   Base styles — body, scrollbar, selection
+   Base Styles
 ----------------------------------------------- */
 body {
   color: var(--foreground);
@@ -35,82 +41,112 @@ body {
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 
-/* Scrollbar customize karna — default bahut ugly lagta hai */
+/* custom scrollbar — the default one ruins the dark theme */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
+  height: 5px;
 }
-
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
+  background: rgba(63, 63, 70, 0.6);
+  border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+  background: rgba(113, 113, 122, 0.6);
 }
 
-/* Text select karne par accent color dikhega */
+/* text selection gets the accent color */
 ::selection {
-  background: rgba(139, 92, 246, 0.3);
+  background: rgba(6, 182, 212, 0.3);
   color: #fff;
 }
 
 /* -----------------------------------------------
-   Utility classes — Tailwind extend ke upar
-   custom utilities jo baar baar chahiye
+   Utility Classes — reusable across components
 ----------------------------------------------- */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 
-  /* Glassmorphism effect — cards ke liye mast lagega */
+  /* glassmorphism — the bread and butter of this UI */
   .glass {
-    background: rgba(24, 24, 27, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(24, 24, 27, 0.6);
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    border: 1px solid var(--border);
   }
 
-  /* Glow effect — hover pe buttons ke liye */
-  .glow-violet {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3),
-                0 0 60px rgba(139, 92, 246, 0.1);
+  /* stronger glass — for elevated panels and modals */
+  .glass-strong {
+    background: rgba(24, 24, 27, 0.85);
+    backdrop-filter: blur(24px) saturate(1.3);
+    -webkit-backdrop-filter: blur(24px) saturate(1.3);
+    border: 1px solid var(--border);
+  }
+
+  /* cyan glow — for active/focused elements */
+  .glow-cyan {
+    box-shadow: 0 0 15px var(--accent-glow),
+                0 0 45px rgba(6, 182, 212, 0.1);
+  }
+
+  /* ring glow — more subtle, for borders */
+  .ring-glow-cyan {
+    box-shadow: 0 0 0 1px var(--border-active),
+                0 0 20px rgba(6, 182, 212, 0.08);
+  }
+
+  /* pulsing dot — for recording indicator */
+  .dot-pulse {
+    animation: dot-pulse 1.5s ease-in-out infinite;
   }
 }
 
 /* -----------------------------------------------
-   Animations — smooth feel ke liye
-   boring static pages kaun dekhna chahta hai
+   Animations — smooth and subtle, nothing crazy
 ----------------------------------------------- */
 @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes pulse-soft {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
+@keyframes fade-in-scale {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.6s ease-out forwards;
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.animate-pulse-soft {
-  animation: pulse-soft 2s ease-in-out infinite;
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(1.3); }
 }
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes border-spin {
+  0%   { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+/* waveform bars for the audio recorder */
+@keyframes wave-bar {
+  0%, 100% { height: 12px; }
+  50%      { height: 28px; }
+}
+
+.animate-fade-in       { animation: fade-in 0.5s ease-out forwards; }
+.animate-fade-in-scale { animation: fade-in-scale 0.4s ease-out forwards; }
+.animate-slide-up      { animation: slide-up 0.6s ease-out forwards; }
+
+/* stagger helper — use with style={{ animationDelay: 'Xms' }} */
+.stagger { opacity: 0; }
