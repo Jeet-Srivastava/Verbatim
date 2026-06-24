@@ -16,6 +16,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import { useToast } from "@/components/ui/Toast";
 
 // keep this separate from the File object — only the stuff we render
 interface FileMetadata {
@@ -44,6 +45,7 @@ interface DropZoneProps {
 }
 
 export default function DropZone({ onFileSelected, onFileRemoved, disabled = false }: DropZoneProps) {
+  const { toast } = useToast();
   const [fileMeta, setFileMeta] = useState<FileMetadata | null>(null);
   const [isDragActive, setIsDragActive] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -93,6 +95,8 @@ export default function DropZone({ onFileSelected, onFileRemoved, disabled = fal
     const validationError = validateFile(file);
     if (validationError) {
       setError(validationError);
+      // also fire a toast so the user sees it even if they scroll past the dropzone
+      toast.error(validationError);
       return;
     }
 
@@ -118,7 +122,7 @@ export default function DropZone({ onFileSelected, onFileRemoved, disabled = fal
     // store the heavy File object in ref (no re-render)
     fileRef.current = file;
     onFileSelected(file);
-  }, [fileMeta?.previewUrl, onFileSelected, validateFile]);
+  }, [fileMeta?.previewUrl, onFileSelected, validateFile, toast]);
 
   // remove the current file
   const handleRemove = useCallback(() => {

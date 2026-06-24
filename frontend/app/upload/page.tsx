@@ -23,6 +23,7 @@ import Tabs from "@/components/ui/Tabs";
 import DropZone from "@/components/upload/DropZone";
 import AudioRecorder from "@/components/upload/AudioRecorder";
 import ResultsView from "@/components/results/ResultsView";
+import { ToastProvider, useToast } from "@/components/ui/Toast";
 
 interface Chapter {
   start: number;
@@ -56,7 +57,19 @@ const TABS = [
   },
 ];
 
+// wrapper component that provides the ToastProvider context
 export default function UploadPage() {
+  return (
+    <ToastProvider>
+      <UploadPageContent />
+    </ToastProvider>
+  );
+}
+
+// the actual page content — separated so we can call useToast() inside it
+function UploadPageContent() {
+  const { toast } = useToast();
+
   const [activeTab, setActiveTab] = useState("upload");
   const [hasFile, setHasFile] = useState(false);
   const [fileName, setFileName] = useState("");
@@ -153,10 +166,21 @@ export default function UploadPage() {
         setProgressStatus("Generating chapters with LLaMA...");
       }, 10000);
 
-      const res = await fetch("http://localhost:8000/api/process", {
-        method: "POST",
-        body: formData,
-      });
+      let res: Response;
+      try {
+        res = await fetch("http://localhost:8000/api/process", {
+          method: "POST",
+          body: formData,
+        });
+      } catch {
+        // this fires when the backend is completely unreachable
+        clearTimeout(progressTimer);
+        clearTimeout(progressTimer2);
+        clearTimeout(progressTimer3);
+        throw new Error(
+          "Can't reach the backend server. Make sure it's running on port 8000."
+        );
+      }
 
       // clear the fake progress timers once the real response arrives
       clearTimeout(progressTimer);
@@ -185,13 +209,14 @@ export default function UploadPage() {
     } catch (err: unknown) {
       console.error("[Verbatim] Pipeline error:", err);
       const errorMessage = err instanceof Error ? err.message : String(err);
-      alert(`Something went wrong: ${errorMessage}`);
+      // fire a nice red toast instead of the ugly browser alert()
+      toast.error(errorMessage, 7000);
     } finally {
       setIsProcessing(false);
       setProgressStatus("");
       setProgressStep(0);
     }
-  }, []);
+  }, [toast]);
 
   // clean up Object URLs on unmount so we don't leak browser memory
   useEffect(() => {
