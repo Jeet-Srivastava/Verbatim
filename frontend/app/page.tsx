@@ -20,16 +20,16 @@ export default function Home() {
         <div className="text-center mb-12 animate-fade-in">
           {/* glowing accent dot above the title */}
           <div className="flex justify-center mb-6">
-            <div className="w-2 h-2 rounded-full bg-cyan-400 glow-cyan" />
+            <div className="w-2 h-2 rounded-full bg-rose-400 glow-rose" />
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-5">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-cyan-300">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-rose-400">
               Verbatim
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-zinc-400 max-w-lg mx-auto text-balance leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-500 max-w-lg mx-auto text-balance leading-relaxed">
             Upload your video or audio. Get an accurate transcript
             in seconds — powered by Groq AI.
           </p>
@@ -39,10 +39,10 @@ export default function Home() {
             <Link
               href="/upload"
               className="group relative px-7 py-3.5 rounded-xl font-semibold text-white
-                bg-gradient-to-r from-cyan-600 to-blue-600
-                hover:from-cyan-500 hover:to-blue-500
+                bg-gradient-to-r from-rose-500 to-pink-600
+                hover:from-rose-400 hover:to-pink-500
                 transition-all duration-300
-                hover:shadow-xl hover:shadow-cyan-500/20
+                hover:shadow-xl hover:shadow-rose-500/20
                 active:scale-[0.97]"
             >
               <span className="flex items-center gap-2">
@@ -58,9 +58,9 @@ export default function Home() {
               href="https://github.com/Jeet-Srivastava/Verbatim"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-7 py-3.5 rounded-xl font-medium text-zinc-400
-                border border-zinc-800 hover:border-zinc-700
-                hover:text-zinc-200 hover:bg-zinc-900/50
+              className="px-7 py-3.5 rounded-xl font-medium text-gray-500
+                border border-gray-200 hover:border-gray-300
+                hover:text-gray-900 hover:bg-gray-50
                 transition-all duration-200"
             >
               View Source
@@ -91,7 +91,7 @@ export default function Home() {
         </div>
 
         {/* footer text */}
-        <p className="mt-16 text-xs text-zinc-700 animate-fade-in stagger" style={{ animationDelay: "400ms" }}>
+        <p className="mt-16 text-xs text-gray-400 animate-fade-in stagger" style={{ animationDelay: "400ms" }}>
           Built with Next.js, FastAPI & Groq — by Jeet Srivastava
         </p>
       </div>
@@ -102,11 +102,11 @@ export default function Home() {
 // small helper component — keeps the page file clean
 function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
   return (
-    <div className="glass rounded-xl p-5 text-center hover:border-cyan-500/15
-      transition-all duration-300 group hover:ring-glow-cyan">
+    <div className="glass rounded-xl p-5 text-center hover:border-rose-200
+      transition-all duration-300 group hover:ring-glow-rose">
       <div className="text-2xl mb-2.5 group-hover:scale-110 transition-transform">{icon}</div>
-      <h3 className="text-sm font-semibold text-zinc-300 mb-1">{title}</h3>
-      <p className="text-xs text-zinc-500 leading-relaxed">{description}</p>
+      <h3 className="text-sm font-semibold text-gray-900 mb-1">{title}</h3>
+      <p className="text-xs text-gray-500 leading-relaxed">{description}</p>
     </div>
   );
 }

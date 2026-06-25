@@ -186,7 +186,7 @@ function SingleToast({
   return (
     <div
       className={`pointer-events-auto relative overflow-hidden rounded-xl border backdrop-blur-xl
-        ${s.bg} shadow-2xl shadow-black/20
+        ${s.bg} shadow-2xl shadow-gray-200/50
         transition-all duration-300 ease-out
         ${isExiting ? "opacity-0 translate-x-8 scale-95" : "opacity-100 translate-x-0 scale-100"}
         animate-toast-in`}
@@ -205,7 +205,7 @@ function SingleToast({
         {/* dismiss button */}
         <button
           onClick={handleDismiss}
-          className="shrink-0 text-zinc-500 hover:text-zinc-300 transition-colors mt-0.5"
+          className="shrink-0 text-gray-400 hover:text-gray-600 transition-colors mt-0.5"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -214,7 +214,7 @@ function SingleToast({
       </div>
 
       {/* progress bar — shows how much time is left before auto-dismiss */}
-      <div className="h-0.5 w-full bg-zinc-800/50">
+      <div className="h-0.5 w-full bg-gray-200">
         <div
           className={`h-full ${s.bar} opacity-60`}
           style={{
