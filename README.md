@@ -18,7 +18,7 @@
 
 ## 📌 Overview
 
-**Verbatim** is a full-stack media transcription and analysis system that takes a video or audio file, extracts and compresses the audio, transcribes it using Whisper, generates SRT subtitles, and produces AI-powered chapter markers with an executive summary — all in a single API call.
+**Verbatim** is an AI-Powered Media Transcription & Analysis system that takes a video or audio file, extracts and compresses the audio, transcribes it using Whisper, generates SRT subtitles, and produces AI-powered chapter markers with an executive summary — all in a single API call.
 
 **Author:** Jeet Srivastava
 
