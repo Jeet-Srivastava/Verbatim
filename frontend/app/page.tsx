@@ -91,11 +91,13 @@ export default function Home() {
       {/* SECTION 2: About / The Tech */}
       <section id="about" className="py-24 bg-rose-50/50 border-t border-rose-100 flex flex-col items-center px-4">
         <div className="max-w-3xl text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">How It Works</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">Why Verbatim?</h2>
           <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-8">
-            Verbatim is a high-performance transcription application built to showcase modern web architecture. 
-            The frontend is powered by <strong>Next.js</strong> and Tailwind CSS, providing a blazing fast and responsive user experience. 
-            The backend utilizes <strong>FastAPI</strong> to handle file processing, and interfaces with <strong>Groq&apos;s</strong> ultra-low latency inference engine using state-of-the-art Whisper models to generate highly accurate transcripts in seconds.
+            In today&apos;s fast-paced digital world, valuable insights are often lost in hours of unstructured audio and video. 
+            <strong> Verbatim solves this by transforming your media into actionable, highly accurate text in seconds. </strong> 
+            Whether you are a content creator generating subtitles, a journalist reviewing interviews, or a team summarizing 
+            long meetings, Verbatim delivers instant transcripts and intelligent chapter breakdowns—empowering you to focus 
+            on the content that matters, not the manual transcription.
           </p>
           
           <div className="flex justify-center mb-16">
