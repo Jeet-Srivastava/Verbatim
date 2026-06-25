@@ -192,7 +192,7 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
                 {[...Array(12)].map((_, i) => (
                   <div
                     key={i}
-                    className="w-1 bg-cyan-400 rounded-full"
+                    className="w-1 bg-rose-400 rounded-full"
                     style={{
                       animation: `wave-bar 0.8s ease-in-out infinite`,
                       animationDelay: `${i * 0.07}s`,
@@ -207,7 +207,7 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
                 {[...Array(12)].map((_, i) => (
                   <div
                     key={i}
-                    className="w-1 rounded-full bg-cyan-500/30"
+                    className="w-1 rounded-full bg-rose-500/30"
                     style={{ height: `${8 + (i % 3) * 8}px` }}
                   />
                 ))}
@@ -215,10 +215,10 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
             ) : (
               // mic icon when idle or stopped
               <div className={`p-5 rounded-2xl transition-all duration-300 ${
-                state === "stopped" ? "bg-cyan-500/15" : "bg-zinc-800/60"
+                state === "stopped" ? "bg-rose-100" : "bg-gray-100"
               }`}>
                 <svg
-                  className={`w-8 h-8 ${state === "stopped" ? "text-cyan-400" : "text-zinc-500"}`}
+                  className={`w-8 h-8 ${state === "stopped" ? "text-rose-500" : "text-gray-400"}`}
                   fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -235,16 +235,16 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
           </div>
 
           {/* timer display */}
-          <div className="font-mono text-3xl font-light text-zinc-200 tracking-wider">
+          <div className="font-mono text-3xl font-light text-gray-900 tracking-wider">
             {formatTime(duration)}
           </div>
 
           {/* status text */}
           <p className={`text-xs mt-2 font-medium ${
-            state === "recording" ? "text-red-400" :
-            state === "paused" ? "text-amber-400" :
-            state === "stopped" ? "text-cyan-400" :
-            "text-zinc-500"
+            state === "recording" ? "text-red-500" :
+            state === "paused" ? "text-amber-500" :
+            state === "stopped" ? "text-rose-500" :
+            "text-gray-500"
           }`}>
             {state === "recording" && "Recording..."}
             {state === "paused" && "Paused"}
@@ -260,18 +260,18 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
             <button
               onClick={startRecording}
               className="flex items-center gap-2 px-6 py-3 rounded-xl
-                bg-cyan-600 hover:bg-cyan-500 text-white font-medium
-                transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/25
+                bg-rose-500 hover:bg-rose-400 text-white font-medium
+                transition-all duration-200 hover:shadow-lg hover:shadow-rose-500/25
                 active:scale-95"
             >
-              <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+              <div className="w-2.5 h-2.5 rounded-full bg-white" />
               Start Recording
             </button>
           )}
 
           {state === "requesting" && (
             <button disabled className="flex items-center gap-2 px-6 py-3 rounded-xl
-              bg-zinc-700 text-zinc-400 font-medium cursor-wait">
+              bg-gray-100 text-gray-500 font-medium cursor-wait">
               <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" />
                 <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="opacity-75" />
@@ -285,8 +285,8 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
               {/* pause/resume */}
               <button
                 onClick={togglePause}
-                className="p-3 rounded-xl bg-zinc-800 hover:bg-zinc-700
-                  text-zinc-300 transition-all duration-200 active:scale-95"
+                className="p-3 rounded-xl bg-white border border-gray-200 hover:bg-gray-50
+                  text-gray-700 transition-all duration-200 active:scale-95 shadow-sm"
                 title={state === "paused" ? "Resume" : "Pause"}
               >
                 {state === "paused" ? (
@@ -304,8 +304,8 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
               <button
                 onClick={stopRecording}
                 className="flex items-center gap-2 px-6 py-3 rounded-xl
-                  bg-red-600/90 hover:bg-red-500 text-white font-medium
-                  transition-all duration-200 active:scale-95"
+                  bg-red-500 hover:bg-red-600 text-white font-medium
+                  transition-all duration-200 active:scale-95 shadow-sm"
               >
                 <div className="w-3 h-3 rounded-sm bg-white" />
                 Stop
@@ -317,8 +317,8 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
             <button
               onClick={resetRecording}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl
-                bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-medium
-                transition-all duration-200 active:scale-95 text-sm"
+                bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium
+                transition-all duration-200 active:scale-95 text-sm shadow-sm"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round"
@@ -332,13 +332,13 @@ export default function AudioRecorder({ onRecordingComplete }: AudioRecorderProp
 
         {/* audio playback — only after recording is done */}
         {state === "stopped" && audioUrl && (
-          <div className="mt-6 pt-5 border-t border-zinc-800">
+          <div className="mt-6 pt-5 border-t border-gray-200">
             <audio
               src={audioUrl}
               controls
-              className="w-full h-10 [&::-webkit-media-controls-panel]:bg-zinc-800
-                [&::-webkit-media-controls-current-time-display]:text-zinc-400
-                [&::-webkit-media-controls-time-remaining-display]:text-zinc-400"
+              className="w-full h-10 [&::-webkit-media-controls-panel]:bg-gray-100
+                [&::-webkit-media-controls-current-time-display]:text-gray-500
+                [&::-webkit-media-controls-time-remaining-display]:text-gray-500"
             />
             <div className="mt-3 flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/15">
               <div className="w-2 h-2 rounded-full bg-emerald-400" />

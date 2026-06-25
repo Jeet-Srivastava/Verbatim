@@ -15,21 +15,21 @@
    Change these and the whole app follows.
 ----------------------------------------------- */
 :root {
-  --background: #09090b;          /* zinc-950 — deepest dark */
-  --foreground: #e4e4e7;          /* zinc-200 */
-  --accent: #06b6d4;              /* cyan-500 — primary electric blue */
-  --accent-light: #22d3ee;        /* cyan-400 — hover states */
-  --accent-dim: #0891b2;          /* cyan-600 — pressed states */
-  --accent-glow: rgba(6, 182, 212, 0.35);
-  --surface: #18181b;             /* zinc-900 — cards, panels */
-  --surface-elevated: #1c1c20;    /* slightly lighter than surface */
-  --surface-hover: #27272a;       /* zinc-800 */
-  --border: rgba(63, 63, 70, 0.5);  /* zinc-700 at 50% — subtle borders */
-  --border-active: rgba(6, 182, 212, 0.4);
-  --muted: #71717a;               /* zinc-500 */
-  --success: #34d399;             /* emerald-400 */
-  --error: #f87171;               /* red-400 */
-  --warning: #fbbf24;             /* amber-400 */
+  --background: #ffffff;          /* white base */
+  --foreground: #111827;          /* gray-900 */
+  --accent: #f43f5e;              /* rose-500 — primary accent */
+  --accent-light: #fb7185;        /* rose-400 — hover states */
+  --accent-dim: #e11d48;          /* rose-600 — pressed states */
+  --accent-glow: rgba(244, 63, 94, 0.25);
+  --surface: #fff1f2;             /* rose-50 — cards, panels */
+  --surface-elevated: #ffe4e6;    /* rose-100 */
+  --surface-hover: #fecdd3;       /* rose-200 */
+  --border: rgba(254, 205, 211, 0.8);  /* border-rose-200 */
+  --border-active: rgba(244, 63, 94, 0.4);
+  --muted: #6b7280;               /* gray-500 */
+  --success: #10b981;             /* emerald-500 */
+  --error: #ef4444;               /* red-500 */
+  --warning: #f59e0b;             /* amber-500 */
 }
 
 /* -----------------------------------------------
@@ -41,7 +41,7 @@ body {
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 
-/* custom scrollbar — the default one ruins the dark theme */
+/* custom scrollbar — the default one ruins the theme */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -50,17 +50,17 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(63, 63, 70, 0.6);
+  background: rgba(254, 205, 211, 0.8); /* rose-200 */
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(113, 113, 122, 0.6);
+  background: rgba(253, 164, 175, 0.8); /* rose-300 */
 }
 
 /* text selection gets the accent color */
 ::selection {
-  background: rgba(6, 182, 212, 0.3);
-  color: #fff;
+  background: rgba(244, 63, 94, 0.2);
+  color: #111827;
 }
 
 /* -----------------------------------------------
@@ -73,7 +73,7 @@ body {
 
   /* glassmorphism — the bread and butter of this UI */
   .glass {
-    background: rgba(24, 24, 27, 0.6);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(16px) saturate(1.2);
     -webkit-backdrop-filter: blur(16px) saturate(1.2);
     border: 1px solid var(--border);
@@ -81,22 +81,22 @@ body {
 
   /* stronger glass — for elevated panels and modals */
   .glass-strong {
-    background: rgba(24, 24, 27, 0.85);
+    background: rgba(255, 241, 242, 0.85); /* rose-50 based */
     backdrop-filter: blur(24px) saturate(1.3);
     -webkit-backdrop-filter: blur(24px) saturate(1.3);
     border: 1px solid var(--border);
   }
 
-  /* cyan glow — for active/focused elements */
-  .glow-cyan {
+  /* rose glow — for active/focused elements */
+  .glow-rose {
     box-shadow: 0 0 15px var(--accent-glow),
-                0 0 45px rgba(6, 182, 212, 0.1);
+                0 0 45px rgba(244, 63, 94, 0.1);
   }
 
   /* ring glow — more subtle, for borders */
-  .ring-glow-cyan {
+  .ring-glow-rose {
     box-shadow: 0 0 0 1px var(--border-active),
-                0 0 20px rgba(6, 182, 212, 0.08);
+                0 0 20px rgba(244, 63, 94, 0.08);
   }
 
   /* pulsing dot — for recording indicator */

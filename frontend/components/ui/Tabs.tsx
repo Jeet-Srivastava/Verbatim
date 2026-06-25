@@ -22,7 +22,7 @@ interface TabsProps {
 
 export default function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
   return (
-    <div className="inline-flex p-1 rounded-xl bg-zinc-900/80 border border-zinc-800/60">
+    <div className="inline-flex p-1 rounded-xl bg-gray-50 border border-gray-200">
       {tabs.map((tab) => {
         const isActive = tab.id === activeTab;
         return (
@@ -33,14 +33,14 @@ export default function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
               relative flex items-center gap-2 px-5 py-2.5 rounded-lg
               text-sm font-medium transition-all duration-250 ease-out
               ${isActive
-                ? "text-cyan-300 bg-cyan-500/10 shadow-sm shadow-cyan-500/5"
-                : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/40"
+                ? "text-rose-600 bg-white shadow-sm border border-gray-100"
+                : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
               }
             `}
           >
             {/* icon if provided */}
             {tab.icon && (
-              <span className={`transition-colors ${isActive ? "text-cyan-400" : ""}`}>
+              <span className={`transition-colors ${isActive ? "text-rose-500" : ""}`}>
                 {tab.icon}
               </span>
             )}
@@ -49,7 +49,7 @@ export default function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
             {/* active indicator line at the bottom */}
             {isActive && (
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5
-                rounded-full bg-cyan-400 animate-fade-in" />
+                rounded-full bg-rose-400 animate-fade-in" />
             )}
           </button>
         );

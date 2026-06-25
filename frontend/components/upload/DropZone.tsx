@@ -203,15 +203,15 @@ export default function DropZone({ onFileSelected, onFileRemoved, disabled = fal
           min-h-[280px] group
           ${disabled ? "opacity-50 cursor-not-allowed" : ""}
           ${isDragActive
-            ? "glass border-cyan-500/50 glow-cyan scale-[1.01]"
-            : "glass hover:border-cyan-500/20 hover:ring-glow-cyan"
+            ? "glass border-rose-500/50 glow-rose scale-[1.01] bg-rose-50"
+            : "glass hover:border-rose-500/20 hover:ring-glow-rose bg-white"
           }
         `}
       >
         {/* animated background gradient that follows drag state */}
         <div className={`
           absolute inset-0 rounded-2xl transition-opacity duration-500
-          bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5
+          bg-gradient-to-br from-rose-500/10 via-transparent to-pink-500/5
           ${isDragActive ? "opacity-100" : "opacity-0 group-hover:opacity-60"}
         `} />
 
@@ -221,13 +221,13 @@ export default function DropZone({ onFileSelected, onFileRemoved, disabled = fal
           <div className={`
             mb-6 p-4 rounded-2xl transition-all duration-300
             ${isDragActive
-              ? "bg-cyan-500/15 scale-110"
-              : "bg-zinc-800/60 group-hover:bg-cyan-500/10"
+              ? "bg-rose-500/15 scale-110"
+              : "bg-gray-50 group-hover:bg-rose-500/10"
             }
           `}>
             <svg
               className={`w-10 h-10 transition-colors duration-300 ${
-                isDragActive ? "text-cyan-400" : "text-zinc-500 group-hover:text-cyan-400/70"
+                isDragActive ? "text-rose-500" : "text-gray-400 group-hover:text-rose-500/70"
               }`}
               fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}
             >
@@ -238,12 +238,12 @@ export default function DropZone({ onFileSelected, onFileRemoved, disabled = fal
           </div>
 
           <h3 className={`text-lg font-semibold mb-1.5 transition-colors ${
-            isDragActive ? "text-cyan-300" : "text-zinc-300"
+            isDragActive ? "text-rose-600" : "text-gray-900"
           }`}>
             {isDragActive ? "Drop it right here" : "Drag & drop your file"}
           </h3>
 
-          <p className="text-sm text-zinc-500 mb-5">
+          <p className="text-sm text-gray-500 mb-5">
             or click anywhere to browse
           </p>
 
@@ -251,8 +251,8 @@ export default function DropZone({ onFileSelected, onFileRemoved, disabled = fal
           <button
             type="button"
             className="px-5 py-2.5 text-sm font-medium rounded-xl
-              bg-cyan-600/20 text-cyan-400 border border-cyan-500/20
-              hover:bg-cyan-600/30 hover:border-cyan-500/40
+              bg-rose-50 text-rose-600 border border-rose-200
+              hover:bg-rose-100 hover:border-rose-300
               transition-all duration-200 active:scale-95"
             onClick={(e) => {
               e.stopPropagation();
@@ -262,7 +262,7 @@ export default function DropZone({ onFileSelected, onFileRemoved, disabled = fal
             Browse Files
           </button>
 
-          <p className="text-xs text-zinc-600 mt-4">
+          <p className="text-xs text-gray-400 mt-4">
             MP4, MKV, AVI, MOV, MP3, WAV — up to 500MB
           </p>
         </div>
@@ -298,10 +298,10 @@ function FilePreviewCard({ meta, onRemove }: { meta: FileMetadata; onRemove: () 
   const isAudio = meta.type.startsWith("audio/");
 
   return (
-    <div className="glass-strong rounded-2xl overflow-hidden">
+    <div className="bg-white border border-rose-100 shadow-sm rounded-2xl overflow-hidden">
       {/* video preview — only if it's a video file */}
       {isVideo && meta.previewUrl && (
-        <div className="relative bg-black/40">
+        <div className="relative bg-gray-100">
           <video
             src={meta.previewUrl}
             className="w-full max-h-[240px] object-contain"
@@ -316,15 +316,15 @@ function FilePreviewCard({ meta, onRemove }: { meta: FileMetadata; onRemove: () 
             }}
           />
           {/* subtle overlay gradient at the bottom */}
-          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-zinc-900/80 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/40 to-transparent" />
         </div>
       )}
 
       {/* audio icon — for audio files */}
       {isAudio && (
-        <div className="flex items-center justify-center py-8 bg-zinc-900/40">
-          <div className="p-4 rounded-2xl bg-cyan-500/10">
-            <svg className="w-10 h-10 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <div className="flex items-center justify-center py-8 bg-rose-50/50">
+          <div className="p-4 rounded-2xl bg-rose-100">
+            <svg className="w-10 h-10 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round"
                 d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"
               />
@@ -334,22 +334,22 @@ function FilePreviewCard({ meta, onRemove }: { meta: FileMetadata; onRemove: () 
       )}
 
       {/* file info bar */}
-      <div className="p-5">
+      <div className="p-5 bg-white">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-zinc-200 truncate">{meta.name}</p>
+            <p className="text-sm font-semibold text-gray-900 truncate">{meta.name}</p>
             <div className="flex items-center gap-2 mt-1.5">
-              <span className="text-xs text-zinc-500">{formatSize(meta.size)}</span>
-              <span className="text-zinc-700">·</span>
-              <span className="text-xs text-zinc-500">{getFileTypeLabel(meta.type, meta.name)}</span>
+              <span className="text-xs text-gray-500">{formatSize(meta.size)}</span>
+              <span className="text-gray-300">·</span>
+              <span className="text-xs text-gray-500">{getFileTypeLabel(meta.type, meta.name)}</span>
             </div>
           </div>
 
           {/* remove button */}
           <button
             onClick={onRemove}
-            className="p-2 rounded-lg text-zinc-500 hover:text-red-400
-              hover:bg-red-500/10 transition-all duration-200"
+            className="p-2 rounded-lg text-gray-400 hover:text-red-500
+              hover:bg-red-50 transition-all duration-200"
             title="Remove file"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

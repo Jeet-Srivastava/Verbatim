@@ -248,9 +248,9 @@ function UploadPageContent() {
             <button
               onClick={handleNewUpload}
               className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium
-                bg-zinc-800/60 hover:bg-zinc-700/60 border border-zinc-700/40
-                text-zinc-400 hover:text-white transition-all duration-200
-                active:scale-[0.97]"
+                bg-white hover:bg-rose-50 border border-gray-200
+                text-gray-600 hover:text-rose-600 transition-all duration-200
+                active:scale-[0.97] shadow-sm"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -259,8 +259,8 @@ function UploadPageContent() {
             </button>
 
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)] animate-pulse" />
-              <span className="text-xs text-zinc-500 font-medium">Analysis Complete</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] animate-pulse" />
+              <span className="text-xs text-gray-500 font-medium">Analysis Complete</span>
             </div>
           </div>
 
@@ -281,10 +281,10 @@ function UploadPageContent() {
         <div className="flex-1 flex flex-col items-center px-4 sm:px-6 py-10 md:py-16">
           {/* page header */}
           <div className="text-center mb-8 animate-fade-in">
-            <h1 className="text-2xl md:text-3xl font-bold text-zinc-100 mb-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
               Upload Media
             </h1>
-            <p className="text-sm text-zinc-500 max-w-md">
+            <p className="text-sm text-gray-500 max-w-md">
               Drop a video or audio file, or record directly from your mic.
               We&apos;ll handle the transcription.
             </p>
@@ -322,14 +322,14 @@ function UploadPageContent() {
               <button
                 onClick={handleTranscribe}
                 className="group relative px-8 py-3.5 rounded-xl font-semibold text-white
-                  bg-gradient-to-r from-cyan-600 to-blue-600
-                  hover:from-cyan-500 hover:to-blue-500
+                  bg-gradient-to-r from-rose-500 to-pink-600
+                  hover:from-rose-400 hover:to-pink-500
                   transition-all duration-300
-                  hover:shadow-xl hover:shadow-cyan-500/20
+                  hover:shadow-xl hover:shadow-rose-500/20
                   active:scale-[0.97]"
               >
                 <div className="absolute inset-0 rounded-xl overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent
                     animate-shimmer" style={{ backgroundSize: "200% 100%" }} />
                 </div>
                 <span className="relative flex items-center gap-2">
@@ -359,21 +359,21 @@ function UploadPageContent() {
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm
                         transition-all duration-500
                         ${isCompleted
-                          ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30"
+                          ? "bg-rose-100 text-rose-500 border border-rose-200"
                           : isCurrentStep
-                            ? "bg-cyan-500/10 text-cyan-300 border border-cyan-500/40 animate-pulse glow-cyan"
-                            : "bg-zinc-800/50 text-zinc-600 border border-zinc-700/30"
+                            ? "bg-rose-50 text-rose-600 border border-rose-200 animate-pulse glow-rose"
+                            : "bg-gray-50 text-gray-400 border border-gray-200"
                         }`}>
                         {isCompleted ? "✓" : step.icon}
                       </div>
                       <span className={`text-[10px] font-medium tracking-wider uppercase
-                        ${isCurrentStep ? "text-cyan-400" : isCompleted ? "text-zinc-400" : "text-zinc-600"}`}>
+                        ${isCurrentStep ? "text-rose-500" : isCompleted ? "text-gray-400" : "text-gray-400"}`}>
                         {step.label}
                       </span>
                       {/* connector line between steps */}
                       {i < PROGRESS_STEPS.length - 1 && (
                         <div className={`absolute h-0.5 w-full top-5
-                          ${isCompleted ? "bg-cyan-500/30" : "bg-zinc-800"}`} />
+                          ${isCompleted ? "bg-rose-200" : "bg-gray-100"}`} />
                       )}
                     </div>
                   );
@@ -382,26 +382,26 @@ function UploadPageContent() {
 
               {/* spinning rings */}
               <div className="relative w-16 h-16 flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full border-2 border-cyan-500/30 border-t-cyan-400 animate-spin" />
-                <div className="absolute inset-2 rounded-full border-2 border-blue-500/30 border-b-blue-400 animate-spin"
+                <div className="absolute inset-0 rounded-full border-2 border-rose-500/30 border-t-rose-400 animate-spin" />
+                <div className="absolute inset-2 rounded-full border-2 border-pink-500/30 border-b-pink-400 animate-spin"
                   style={{ animationDirection: "reverse", animationDuration: "1.5s" }} />
-                <svg className="w-6 h-6 text-cyan-400 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="w-6 h-6 text-rose-500 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                 </svg>
               </div>
 
               {/* status text */}
-              <div className="mt-6 font-mono text-sm text-cyan-400 tracking-wider uppercase animate-pulse text-center">
+              <div className="mt-6 font-mono text-sm text-rose-500 tracking-wider uppercase animate-pulse text-center">
                 {progressStatus}
               </div>
-              <div className="mt-2 text-xs text-zinc-600 text-center">
+              <div className="mt-2 text-xs text-gray-500 text-center">
                 This usually takes 30-60 seconds depending on file size
               </div>
             </div>
           )}
 
           {/* bottom info */}
-          <p className="mt-12 text-xs text-zinc-700 animate-fade-in stagger" style={{ animationDelay: "400ms" }}>
+          <p className="mt-12 text-xs text-gray-400 animate-fade-in stagger" style={{ animationDelay: "400ms" }}>
             Your files are processed securely and never stored permanently.
           </p>
         </div>
