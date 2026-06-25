@@ -36,8 +36,16 @@ interface ResultsViewProps {
   fileName: string;
 }
 
-// which tab is active in the right panel
+// which tab is showing in the right panel
 type PanelTab = "chapters" | "transcript" | "srt";
+
+// Helper to convert SRT to VTT format entirely on the frontend
+// This prevents us from needing to touch the backend logic at all!
+function srtToVtt(srt: string): string {
+  // Replace the comma with a period specifically in the timestamps
+  const vttBody = srt.replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g, "$1.$2");
+  return `WEBVTT\n\n${vttBody}`;
+}
 
 export default function ResultsView({
   videoUrl,
@@ -58,6 +66,24 @@ export default function ResultsView({
 
   // current playback time — updated via the video's timeupdate event
   const [currentTime, setCurrentTime] = useState(0);
+
+  // subtitle states
+  const [showCaptions, setShowCaptions] = useState(true);
+  const [vttUrl, setVttUrl] = useState<string | null>(null);
+
+  // convert SRT to VTT and create a Blob URL for the video player
+  useEffect(() => {
+    if (!srtContent) return;
+    
+    const vtt = srtToVtt(srtContent);
+    const blob = new Blob([vtt], { type: "text/vtt;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    
+    setVttUrl(url);
+    
+    // clean up the URL when component unmounts or SRT changes
+    return () => URL.revokeObjectURL(url);
+  }, [srtContent]);
 
   // listen to the video's timeupdate event so we can highlight the active chapter
   // timeupdate fires roughly 4 times per second — plenty for our purposes
@@ -148,11 +174,22 @@ export default function ResultsView({
           <div className="relative rounded-2xl overflow-hidden glass-strong glow-cyan">
             <video
               ref={videoRef}
-              src={videoUrl}
               controls
               className="w-full aspect-video bg-black"
               preload="metadata"
-            />
+              crossOrigin="anonymous"
+            >
+              <source src={videoUrl} type="video/mp4" />
+              {showCaptions && vttUrl && (
+                <track 
+                  src={vttUrl} 
+                  kind="subtitles" 
+                  srcLang="en" 
+                  label="English" 
+                  default 
+                />
+              )}
+            </video>
           </div>
 
           {/* action bar below the video — download SRT + file info */}
@@ -162,18 +199,36 @@ export default function ResultsView({
               <span className="truncate max-w-[200px]">{fileName}</span>
             </div>
 
-            <button
-              onClick={handleDownloadSRT}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium
-                bg-zinc-800/80 hover:bg-zinc-700/80 border border-zinc-700/50
-                text-zinc-300 hover:text-white transition-all duration-200
-                hover:shadow-lg hover:shadow-cyan-500/5 active:scale-[0.97]"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-              Download .SRT
-            </button>
+            <div className="flex items-center gap-3">
+              {/* CC Toggle */}
+              <button
+                onClick={() => setShowCaptions(!showCaptions)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border transition-all duration-200
+                  ${showCaptions 
+                    ? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300" 
+                    : "bg-zinc-800/80 border-zinc-700/50 text-zinc-400 hover:text-zinc-300"
+                  }`}
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                </svg>
+                {showCaptions ? "Captions On" : "Captions Off"}
+              </button>
+
+              {/* Download SRT */}
+              <button
+                onClick={handleDownloadSRT}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium
+                  bg-zinc-800/80 hover:bg-zinc-700/80 border border-zinc-700/50
+                  text-zinc-300 hover:text-white transition-all duration-200
+                  hover:shadow-lg hover:shadow-cyan-500/5 active:scale-[0.97]"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Download .SRT
+              </button>
+            </div>
           </div>
         </div>
 
