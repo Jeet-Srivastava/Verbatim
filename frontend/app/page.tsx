@@ -11,13 +11,13 @@ import Navbar from "@/components/layout/Navbar";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen font-sans">
       <Navbar />
 
-      {/* hero section — full viewport centered */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-16 md:py-24">
+      {/* SECTION 1: Hero — takes full viewport minus navbar */}
+      <section className="relative flex flex-col items-center justify-center px-4 py-16 md:py-24 min-h-[calc(100vh-3.5rem)]">
         {/* brand + tagline */}
-        <div className="text-center mb-12 animate-fade-in">
+        <div className="text-center mb-12 animate-fade-in flex flex-col items-center">
           {/* glowing accent dot above the title */}
           <div className="flex justify-center mb-6">
             <div className="w-2 h-2 rounded-full bg-rose-400 glow-rose" />
@@ -35,7 +35,7 @@ export default function Home() {
           </p>
 
           {/* CTA buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center mt-8">
             <Link
               href="/upload"
               className="group relative px-7 py-3.5 rounded-xl font-semibold text-white
@@ -53,18 +53,6 @@ export default function Home() {
                 </svg>
               </span>
             </Link>
-
-            <a
-              href="https://github.com/Jeet-Srivastava/Verbatim"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-7 py-3.5 rounded-xl font-medium text-gray-500
-                border border-gray-200 hover:border-gray-300
-                hover:text-gray-900 hover:bg-gray-50
-                transition-all duration-200"
-            >
-              View Source
-            </a>
           </div>
         </div>
 
@@ -90,11 +78,53 @@ export default function Home() {
           />
         </div>
 
-        {/* footer text */}
-        <p className="mt-16 text-xs text-gray-400 animate-fade-in stagger" style={{ animationDelay: "400ms" }}>
-          Built with Next.js, FastAPI & Groq — by Jeet Srivastava
-        </p>
-      </div>
+        {/* scroll indicator arrow */}
+        <div className="absolute bottom-10 animate-bounce text-rose-300 hover:text-rose-400 transition-colors hidden md:block">
+          <a href="#about" aria-label="Scroll down to learn more">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      {/* SECTION 2: About / The Tech */}
+      <section id="about" className="py-24 bg-rose-50/50 border-t border-rose-100 flex flex-col items-center px-4">
+        <div className="max-w-3xl text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">How It Works</h2>
+          <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-8">
+            Verbatim is a high-performance transcription application built to showcase modern web architecture. 
+            The frontend is powered by <strong>Next.js</strong> and Tailwind CSS, providing a blazing fast and responsive user experience. 
+            The backend utilizes <strong>FastAPI</strong> to handle file processing, and interfaces with <strong>Groq&apos;s</strong> ultra-low latency inference engine using state-of-the-art Whisper models to generate highly accurate transcripts in seconds.
+          </p>
+          
+          <div className="flex justify-center mb-16">
+            <a
+              href="https://github.com/Jeet-Srivastava/Verbatim"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-7 py-3.5 rounded-xl font-medium text-gray-600
+                border border-gray-200 hover:border-rose-200
+                hover:text-rose-600 hover:bg-rose-50
+                transition-all duration-200 shadow-sm bg-white"
+            >
+              <span className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                View Source Code
+              </span>
+            </a>
+          </div>
+
+          {/* footer text */}
+          <div className="pt-8 border-t border-gray-200">
+            <p className="text-xs text-gray-400">
+              Built with Next.js, FastAPI & Groq — by Jeet Srivastava
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
