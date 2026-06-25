@@ -168,7 +168,8 @@ function UploadPageContent() {
 
       let res: Response;
       try {
-        res = await fetch("http://localhost:8000/api/process", {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        res = await fetch(`${apiUrl}/api/process`, {
           method: "POST",
           body: formData,
         });
